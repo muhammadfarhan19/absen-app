@@ -1,0 +1,12 @@
+-- UP
+CREATE TABLE IF NOT EXISTS salary (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  month VARCHAR(7) NOT NULL,
+  total_gaji DECIMAL(15, 2) NOT NULL,
+  total_potongan DECIMAL(15, 2) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- DOWN
+-- DROP TABLE salary;

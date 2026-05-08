@@ -1,0 +1,10 @@
+-- UP
+CREATE TABLE IF NOT EXISTS employees (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  gaji_pokok DECIMAL(15, 2) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- DOWN
+-- DROP TABLE employees;

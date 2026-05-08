@@ -1,0 +1,22 @@
+# Node.js
+backend/node_modules/
+backend/.env
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# Android
+kepegawaian-android/.gradle/
+kepegawaian-android/local.properties
+kepegawaian-android/.idea/
+kepegawaian-android/build/
+kepegawaian-android/captures/
+kepegawaian-android/.externalNativeBuild/
+kepegawaian-android/.cxx/
+kepegawaian-android/app/build/
+kepegawaian-android/*.iml
+
+# General
+.DS_Store
+*.log
+Thumbs.db
