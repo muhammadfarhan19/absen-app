@@ -59,19 +59,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Start Day"
-                    android:textColor="@color/text_gray"
-                    android:textSize="12sp" />
-
-                <TextView
                     android:id="@+id/tvCheckInTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="08:59"
                     android:textColor="@color/navy_blue"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check In"
+                    android:textColor="@color/text_gray"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -99,19 +99,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="End Day"
-                    android:textColor="@color/text_gray"
-                    android:textSize="12sp" />
-
-                <TextView
                     android:id="@+id/tvCheckOutTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18:00"
                     android:textColor="@color/navy_blue"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check Out"
+                    android:textColor="@color/text_gray"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 

@@ -80,6 +80,7 @@ class AttendanceFragment : Fragment() {
                 is UiState.Success -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(context, state.data, Toast.LENGTH_SHORT).show()
+                    viewModel.getTodayAttendance()
                 }
                 is UiState.Error -> {
                     binding.progressBar.visibility = View.GONE

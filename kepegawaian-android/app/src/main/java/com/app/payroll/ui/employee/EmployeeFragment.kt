@@ -15,6 +15,10 @@ import com.app.payroll.storage.AuthDataStore
 import com.app.payroll.utils.UiState
 import com.app.payroll.utils.ViewModelFactory
 
+import androidx.appcompat.app.AlertDialog
+import com.app.payroll.data.remote.response.UserResponse
+import com.app.payroll.databinding.DialogEmployeeBinding
+
 class EmployeeFragment : Fragment() {
 
     private var _binding: FragmentEmployeeBinding? = null
@@ -39,12 +43,21 @@ class EmployeeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EmployeeAdapter()
+        adapter = EmployeeAdapter(
+            onEdit = { showAddEditDialog(it) },
+            onDelete = { showDeleteConfirmation(it) }
+        )
         binding.rvEmployees.layoutManager = LinearLayoutManager(context)
         binding.rvEmployees.adapter = adapter
 
         viewModel.getAllEmployees()
 
+        binding.fabAdd.setOnClickListener { showAddEditDialog(null) }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewModel.employeesState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> binding.progressBar.visibility = View.VISIBLE
@@ -58,6 +71,70 @@ class EmployeeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.actionState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is UiState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(context, state.data, Toast.LENGTH_SHORT).show()
+                }
+                is UiState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun showAddEditDialog(user: UserResponse?) {
+        val dialogBinding = DialogEmployeeBinding.inflate(layoutInflater)
+        val isEdit = user != null
+        
+        if (isEdit) {
+            dialogBinding.etName.setText(user?.name)
+            dialogBinding.etEmail.setText(user?.email)
+            dialogBinding.etSalary.setText(user?.gajiPokok?.toLong()?.toString())
+            dialogBinding.tilPassword.visibility = View.GONE
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(if (isEdit) "Edit Employee" else "Add New Employee")
+            .setView(dialogBinding.root)
+            .setPositiveButton("Save") { _, _ ->
+                val name = dialogBinding.etName.text.toString()
+                val email = dialogBinding.etEmail.text.toString()
+                val password = dialogBinding.etPassword.text.toString()
+                val salary = dialogBinding.etSalary.text.toString().toDoubleOrNull() ?: 0.0
+
+                val updatedUser = UserResponse(
+                    id = user?.id ?: 0,
+                    name = name,
+                    email = email,
+                    role = user?.role ?: "karyawan",
+                    gajiPokok = salary,
+                    password = if (isEdit) null else password
+                )
+
+                if (isEdit) {
+                    viewModel.updateEmployee(user!!.id, updatedUser)
+                } else {
+                    viewModel.createEmployee(updatedUser)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showDeleteConfirmation(user: UserResponse) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Employee")
+            .setMessage("Are you sure you want to delete ${user.name}?")
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.deleteEmployee(user.id)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     override fun onDestroyView() {

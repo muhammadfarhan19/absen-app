@@ -31,8 +31,9 @@ class SalaryAdapter : RecyclerView.Adapter<SalaryAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ItemSalaryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SalaryResponse) {
-            binding.tvMonth.text = "Bulan: ${item.month}"
-            binding.tvTotalGaji.text = "Total Gaji: ${formatCurrency(item.totalGaji)}"
+            binding.tvMonth.text = item.month
+            binding.tvEmployeeName.text = item.name ?: "User"
+            binding.tvTotalGaji.text = formatCurrency(item.totalGaji)
             binding.tvTotalPotongan.text = "Potongan: ${formatCurrency(item.totalPotongan)}"
         }
 

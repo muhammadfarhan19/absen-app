@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.payroll.data.remote.response.UserResponse
 import com.app.payroll.databinding.ItemEmployeeBinding
 
-class EmployeeAdapter : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
+class EmployeeAdapter(
+    private val onEdit: (UserResponse) -> Unit,
+    private val onDelete: (UserResponse) -> Unit
+) : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
 
     private val items = mutableListOf<UserResponse>()
 
@@ -22,16 +25,19 @@ class EmployeeAdapter : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position], onEdit, onDelete)
     }
 
     override fun getItemCount(): Int = items.size
 
     class ViewHolder(private val binding: ItemEmployeeBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserResponse) {
+        fun bind(item: UserResponse, onEdit: (UserResponse) -> Unit, onDelete: (UserResponse) -> Unit) {
             binding.tvName.text = item.name
             binding.tvEmail.text = item.email
             binding.tvRole.text = item.role
+            
+            binding.btnEdit.setOnClickListener { onEdit(item) }
+            binding.btnDelete.setOnClickListener { onDelete(item) }
         }
     }
 }

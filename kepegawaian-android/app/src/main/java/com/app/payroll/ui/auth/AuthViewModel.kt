@@ -30,6 +30,7 @@ class AuthViewModel(
                     if (body?.success == true && body.data != null) {
                         authDataStore.saveToken(body.data.token)
                         authDataStore.saveRole(body.data.user.role)
+                        authDataStore.saveName(body.data.user.name)
                         _loginState.value = UiState.Success(body.data)
                     } else {
                         _loginState.value = UiState.Error(body?.message ?: "Login failed")

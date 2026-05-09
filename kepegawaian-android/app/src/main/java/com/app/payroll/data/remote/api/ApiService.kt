@@ -1,6 +1,7 @@
 package com.app.payroll.data.remote.api
 
 import com.app.payroll.data.remote.dto.LoginRequest
+import com.app.payroll.data.remote.dto.SalaryCalculationRequest
 import com.app.payroll.data.remote.response.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -44,5 +45,5 @@ interface ApiService {
     suspend fun getAllSalary(): Response<BaseResponse<List<SalaryResponse>>>
 
     @POST("salary/calculate")
-    suspend fun calculateSalary(@Body request: Map<String, String>): Response<BaseResponse<Any>>
+    suspend fun calculateSalary(@Body request: SalaryCalculationRequest): Response<BaseResponse<Any>>
 }
