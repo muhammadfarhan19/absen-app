@@ -2,6 +2,7 @@ package com.app.payroll
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.app.payroll.databinding.ActivityMainBinding
 import com.app.payroll.storage.AuthDataStore
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var authDataStore: AuthDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

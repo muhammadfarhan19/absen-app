@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Employee Role"
-                android:textColor="#CCCCCC"
+                android:textColor="#B3D4FF"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/tvName"
                 app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -174,7 +174,7 @@
                         android:background="@drawable/bg_action_icon"
                         android:padding="12dp"
                         android:src="@android:drawable/ic_menu_agenda"
-                        app:tint="#27AE60" />
+                        app:tint="#34A853" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
                         android:background="@drawable/bg_action_icon"
                         android:padding="12dp"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        app:tint="#F2994A" />
+                        app:tint="#FB8C00" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -256,7 +256,7 @@
                         android:background="@drawable/bg_action_icon"
                         android:padding="12dp"
                         android:src="@android:drawable/ic_menu_view"
-                        app:tint="#EB5757" />
+                        app:tint="#E53935" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
                         android:background="@drawable/bg_action_icon"
                         android:padding="12dp"
                         android:src="@android:drawable/ic_menu_save"
-                        app:tint="#8E44AD" />
+                        app:tint="#8B5CF6" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
