@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkConfig {
-    private const val BASE_URL = "http://192.168.1.8:3000/" // Match backend root path
+    private const val DEFAULT_BASE_URL = "https://enormously-epic-eft.ngrok-free.app"
 
     fun getApiService(authDataStore: AuthDataStore): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -28,7 +28,6 @@ object NetworkConfig {
             
             if (response.code == 401) {
                 runBlocking { authDataStore.clearAuth() }
-                // In a real app, you would also trigger a navigation to Login
             }
             
             response
@@ -39,8 +38,16 @@ object NetworkConfig {
             .addInterceptor(authInterceptor)
             .build()
 
+        val savedBaseUrl = runBlocking { authDataStore.baseUrl.first() }
+        val baseUrl = if (!savedBaseUrl.isNullOrBlank()) {
+            // Ensure URL ends with /
+            if (savedBaseUrl.endsWith("/")) savedBaseUrl else "$savedBaseUrl/"
+        } else {
+            DEFAULT_BASE_URL
+        }
+
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

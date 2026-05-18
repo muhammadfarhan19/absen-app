@@ -8,6 +8,7 @@ import com.app.payroll.databinding.ActivityMainBinding
 import com.app.payroll.storage.AuthDataStore
 import com.app.payroll.ui.auth.LoginFragment
 import com.app.payroll.ui.dashboard.DashboardFragment
+import com.app.payroll.ui.server.ServerConfigFragment
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -25,17 +26,19 @@ class MainActivity : AppCompatActivity() {
         authDataStore = AuthDataStore(this)
 
         if (savedInstanceState == null) {
-            checkLoginStatus()
+            checkInitialScreen()
         }
     }
 
-    private fun checkLoginStatus() {
+    private fun checkInitialScreen() {
         lifecycleScope.launch {
+            val baseUrl = authDataStore.baseUrl.first()
             val token = authDataStore.token.first()
-            val fragment = if (token != null) {
-                DashboardFragment()
-            } else {
-                LoginFragment()
+
+            val fragment = when {
+                baseUrl.isNullOrBlank() -> ServerConfigFragment.newInstance(fromDashboard = false)
+                token != null -> DashboardFragment()
+                else -> LoginFragment()
             }
             
             supportFragmentManager.beginTransaction()

@@ -23,6 +23,7 @@ import com.app.payroll.data.remote.api.NetworkConfig
 import com.app.payroll.data.repository.AttendanceRepository
 import com.app.payroll.utils.UiState
 import com.app.payroll.utils.ViewModelFactory
+import com.app.payroll.ui.server.ServerConfigFragment
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,6 +77,10 @@ class DashboardFragment : Fragment() {
                 authDataStore.clearAuth()
                 navigateTo(LoginFragment())
             }
+        }
+
+        binding.btnServerConfig.setOnClickListener {
+            navigateTo(ServerConfigFragment.newInstance(fromDashboard = true))
         }
     }
 

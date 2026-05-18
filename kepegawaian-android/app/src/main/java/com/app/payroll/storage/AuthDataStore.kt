@@ -15,6 +15,7 @@ class AuthDataStore(private val context: Context) {
     private val TOKEN_KEY = stringPreferencesKey("auth_token")
     private val ROLE_KEY = stringPreferencesKey("user_role")
     private val NAME_KEY = stringPreferencesKey("user_name")
+    private val BASE_URL_KEY = stringPreferencesKey("base_url")
 
     val token: Flow<String?> = context.dataStore.data.map { preferences ->
         preferences[TOKEN_KEY]
@@ -28,6 +29,10 @@ class AuthDataStore(private val context: Context) {
         preferences[NAME_KEY]
     }
 
+    val baseUrl: Flow<String?> = context.dataStore.data.map { preferences ->
+        preferences[BASE_URL_KEY]
+    }
+
     suspend fun saveToken(token: String) {
         context.dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
@@ -37,6 +42,12 @@ class AuthDataStore(private val context: Context) {
     suspend fun saveRole(role: String) {
         context.dataStore.edit { preferences ->
             preferences[ROLE_KEY] = role
+        }
+    }
+
+    suspend fun saveBaseUrl(url: String) {
+        context.dataStore.edit { preferences ->
+            preferences[BASE_URL_KEY] = url
         }
     }
 
