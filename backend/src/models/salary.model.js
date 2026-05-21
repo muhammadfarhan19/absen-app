@@ -9,18 +9,18 @@ const checkExistingSalary = async (user_id, month) => {
 };
 
 const create = async (salaryData) => {
-  const { user_id, month, total_gaji, total_potongan } = salaryData;
+  const { user_id, month, total_gaji, total_potongan, bpjs_kesehatan, bpjs_ketenagakerjaan } = salaryData;
   const [result] = await db.execute(
-    'INSERT INTO salary (user_id, month, total_gaji, total_potongan) VALUES (?, ?, ?, ?)',
-    [user_id, month, total_gaji, total_potongan]
+    'INSERT INTO salary (user_id, month, total_gaji, total_potongan, bpjs_kesehatan, bpjs_ketenagakerjaan) VALUES (?, ?, ?, ?, ?, ?)',
+    [user_id, month, total_gaji, total_potongan, bpjs_kesehatan || 0, bpjs_ketenagakerjaan || 0]
   );
   return result.insertId;
 };
 
-const update = async (id, total_gaji, total_potongan) => {
+const update = async (id, total_gaji, total_potongan, bpjs_kesehatan, bpjs_ketenagakerjaan) => {
   await db.execute(
-    'UPDATE salary SET total_gaji = ?, total_potongan = ? WHERE id = ?',
-    [total_gaji, total_potongan, id]
+    'UPDATE salary SET total_gaji = ?, total_potongan = ?, bpjs_kesehatan = ?, bpjs_ketenagakerjaan = ? WHERE id = ?',
+    [total_gaji, total_potongan, bpjs_kesehatan || 0, bpjs_ketenagakerjaan || 0, id]
   );
 };
 

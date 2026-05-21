@@ -16,21 +16,47 @@ const calculateAndSaveSalary = async (user_id, month) => {
 
   const lateCount = await attendanceModel.countLateInMonth(user_id, startDate, endDate);
   
+  const bpjsKesehatanRate = await settingModel.getByKey('bpjs_kesehatan_rate') || 0.01;
+  const bpjsKetenagakerjaanRate = await settingModel.getByKey('bpjs_ketenagakerjaan_rate') || 0.02;
+
+  const bpjsKesehatan = Math.round(employee.gaji_pokok * parseFloat(bpjsKesehatanRate));
+  const bpjsKetenagakerjaan = Math.round(employee.gaji_pokok * parseFloat(bpjsKetenagakerjaanRate));
+
   const potonganPerTerlambat = await settingModel.getByKey('potongan_terlambat') || 50000;
-  const totalPotongan = lateCount * parseInt(potonganPerTerlambat);
+  const dendaTerlambat = lateCount * parseInt(potonganPerTerlambat);
+  
+  const totalPotongan = dendaTerlambat + bpjsKesehatan + bpjsKetenagakerjaan;
   const totalGaji = employee.gaji_pokok - totalPotongan;
 
   if (existingSalary) {
-    await salaryModel.update(existingSalary.id, totalGaji, totalPotongan);
-    return { id: existingSalary.id, month, total_gaji: totalGaji, total_potongan: totalPotongan, late_count: lateCount };
+    await salaryModel.update(existingSalary.id, totalGaji, totalPotongan, bpjsKesehatan, bpjsKetenagakerjaan);
+    return { 
+      id: existingSalary.id, 
+      month, 
+      total_gaji: totalGaji, 
+      total_potongan: totalPotongan, 
+      late_count: lateCount,
+      bpjs_kesehatan: bpjsKesehatan,
+      bpjs_ketenagakerjaan: bpjsKetenagakerjaan
+    };
   } else {
     const id = await salaryModel.create({
       user_id,
       month,
       total_gaji: totalGaji,
-      total_potongan: totalPotongan
+      total_potongan: totalPotongan,
+      bpjs_kesehatan: bpjsKesehatan,
+      bpjs_ketenagakerjaan: bpjsKetenagakerjaan
     });
-    return { id, month, total_gaji: totalGaji, total_potongan: totalPotongan, late_count: lateCount };
+    return { 
+      id, 
+      month, 
+      total_gaji: totalGaji, 
+      total_potongan: totalPotongan, 
+      late_count: lateCount,
+      bpjs_kesehatan: bpjsKesehatan,
+      bpjs_ketenagakerjaan: bpjsKetenagakerjaan
+    };
   }
 };
 
