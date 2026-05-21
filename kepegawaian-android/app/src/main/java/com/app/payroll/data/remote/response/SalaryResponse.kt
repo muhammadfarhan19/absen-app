@@ -8,5 +8,9 @@ data class SalaryResponse(
     val name: String?,
     val month: String,
     @SerializedName("total_gaji") val totalGaji: Double,
-    @SerializedName("total_potongan") val totalPotongan: Double
+    @SerializedName("total_potongan") val totalPotongan: Double,
+
+    // Properti Baru Potongan BPJS (Nullable untuk kompatibilitas data lama)
+    @SerializedName("bpjs_kesehatan") val bpjsKesehatan: Double?,
+    @SerializedName("bpjs_ketenagakerjaan") val bpjsKetenagakerjaan: Double?
 )

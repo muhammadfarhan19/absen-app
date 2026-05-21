@@ -35,6 +35,12 @@ class AdminSalaryAdapter : RecyclerView.Adapter<AdminSalaryAdapter.ViewHolder>()
             binding.tvEmployeeName.text = item.name ?: "Unknown"
             binding.tvTotalGaji.text = formatCurrency(item.totalGaji)
             binding.tvTotalPotongan.text = "Potongan: ${formatCurrency(item.totalPotongan)}"
+
+            // Bind Field Baru BPJS (Gunakan nilai default 0 jika data bernilai null/lama)
+            val bpjsKes = item.bpjsKesehatan ?: 0.0
+            val bpjsKet = item.bpjsKetenagakerjaan ?: 0.0
+            binding.tvBpjsKesehatan.text = "BPJS Kesehatan: ${formatCurrency(bpjsKes)}"
+            binding.tvBpjsKetenagakerjaan.text = "BPJS Ketenagakerjaan: ${formatCurrency(bpjsKet)}"
         }
 
         private fun formatCurrency(amount: Double): String {

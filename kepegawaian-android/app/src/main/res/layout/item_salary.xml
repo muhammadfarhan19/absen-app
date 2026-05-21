@@ -66,9 +66,31 @@
             android:text="Potongan: Rp 0"
             android:textColor="@color/status_rejected_text"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTotalGaji" />
+
+        <TextView
+            android:id="@+id/tvBpjsKesehatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="BPJS Kesehatan: Rp 0"
+            android:textColor="@color/text_gray"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTotalPotongan" />
+
+        <TextView
+            android:id="@+id/tvBpjsKetenagakerjaan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="BPJS Ketenagakerjaan: Rp 0"
+            android:textColor="@color/text_gray"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBpjsKesehatan" />
 
         <TextView
             android:id="@+id/tvStatus"
